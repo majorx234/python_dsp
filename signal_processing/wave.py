@@ -36,3 +36,18 @@ def generate_white_noise(nsamples: int) -> np.array:
     for idx in range(0,nsamples):
         noise_signal[idx] = np.random.normal(mean,scale)
     return noise_signal
+
+
+def mix_signals(signals: [np.array]) -> np.array:
+    num_signals = len(signals)
+    num_samples = signals[0].size
+    mixed_signal = np.zeros((num_samples,), dtype=float)
+
+    for sample_idx in range(0,num_samples):
+        sum_sample: float = 0.0
+        mul_sample: float = 1.0
+        for sign_idx in range(0,num_signals):
+            sum_sample += signals[sign_idx][sample_idx]
+            mul_sample *= signals[sign_idx][sample_idx]
+        mixed_signal[sample_idx] = sum_sample - mul_sample * num_signals
+    return mixed_signal
