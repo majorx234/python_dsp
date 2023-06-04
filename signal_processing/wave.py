@@ -15,8 +15,16 @@ class Wave:
             sine_wave[x] = np.sin(2 * np.pi * self.frequency * x/self.sampling_rate)
         return sine_wave
 
-    def create_fm_sine(self, freq_fm) -> np.array:
-        fm_sine = np.zeros((self.num_samples,), dtype=float)
+    def create_fm_sine(self, freq_fm_mod) -> np.array:
+        fm_sine_wave = np.zeros((self.num_samples,), dtype=float)
+        modulator_index = 0
+        if freq_fm_mod != 0.0:
+            modulator_index = self.frequency / freq_fm_mod
+        shift = lambda t, fmod, fs : np.cos(2.0 * np.pi * t * fmod / fs)
+        for x in range(self.num_samples):
+            fm_sine_wave[x] = np.sin(2 * np.pi * self.frequency * x/self.sampling_rate + modulator_index* shift(x,freq_fm_mod, self.sampling_rate))
+        return fm_sine_wave
+
 
 def limit_signal(signal: np.array, max: float = 1.0, min: float = -1.0) -> np.array:
     limit_signal = np.zeros((signal.size,), dtype=float)
