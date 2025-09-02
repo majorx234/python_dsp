@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import seaborn as sbn
 
 # file handling
@@ -21,4 +21,5 @@ print("sample_rate: {}".format(sample_rate))
 print(f'y: {y[10]}')
 print(f'shape y: {y.shape}')
 
-pd.Series(y).plot(figsize=(10.5))
+wave_plot = pd.Series(y).plot(figsize=(10, 5))
+plt.show()
