@@ -18,3 +18,7 @@ audio_file = glob("./*.wav")
 y, sample_rate = librosa.load(audio_file[0], sr=None)
 
 print("sample_rate: {}".format(sample_rate))
+print(f'y: {y[10]}')
+print(f'shape y: {y.shape}')
+
+pd.Series(y).plot(figsize=(10.5))
