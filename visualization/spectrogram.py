@@ -23,7 +23,7 @@ print(f'shape y: {y.shape}')
 
 
 plt.figure(1)
-plt.subplot(2, 1, 1)
+plt.subplot(3, 1, 1)
 wave_plot = pd.Series(y).plot(figsize=(10, 5),
                               ax=plt.gca(),
                               lw=1,
@@ -35,6 +35,19 @@ spectrogram = librosa.stft(y)
 spectrogram_db = librosa.amplitude_to_db(np.abs(spectrogram), ref=np.max)
 spec_shape = spectrogram_db.shape
 
-plt.subplot(2, 1, 2)
-img = librosa.display.specshow(spectrogram_db)
+plt.subplot(3, 1, 2)
+img = librosa.display.specshow(spectrogram_db,
+                               x_axis='time',
+                               y_axis='log',
+                               ax=plt.gca())
+
+mel_spectrogram = librosa.feature.melspectrogram(y=y,
+                                                 sr=sample_rate,
+                                                 n_mels=128)
+mel_spectrogram_db = librosa.amplitude_to_db(np.abs(mel_spectrogram), ref=np.max)
+plt.subplot(3, 1, 3)
+img = librosa.display.specshow(mel_spectrogram_db,
+                               x_axis='time',
+                               y_axis='log',
+                               ax=plt.gca())
 plt.show()
